@@ -131,7 +131,7 @@ def get_opening_interval(video_path, threshold=0.5):
     model.load_state_dict(torch.load("zastavka_model.pt"))
     model.eval()
     feats = extract_dino_features(video_path).unsqueeze(0).to(device)
-    _, pred_mask = predict_on_video(model, feats, threshold=0.5)
+    _, pred_mask = predict_on_video(model, feats, threshold)
     return get_main_interval_from_mask(pred_mask)
 
 def seconds_to_time(seconds):
@@ -143,4 +143,4 @@ def seconds_to_time(seconds):
 
 def print_opening_interval(video_path, threshold=0.5):
     start, end = get_opening_interval(video_path, threshold)
-    return f"{seconds_to_time(start)} -- {seconds_to_time(end)}"
+    print(f"{seconds_to_time(start)} -- {seconds_to_time(end)}")
